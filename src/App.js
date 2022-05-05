@@ -1,25 +1,29 @@
-import logo from './logo.svg';
 import './App.css';
+import StudCard from './StudCard';
+import StudCardClass from './StudCardClass';
+import MinMaxIncrement from './MinMaxIncrement';
 
 function App() {
 	return (
 		<div className="App">
-			<header className="App-header">
-				<img src={logo} className="App-logo" alt="logo" />
-				<p>
-					Edit <code>src/App.js</code> and save to reload.
-				</p>
-				<a
-					className="App-link"
-					href="https://reactjs.org"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					Learn React
-				</a>
-			</header>
+			<MinMaxIncrement min={-5} max={5}/>
+			<MinMaxIncrement min={-100} max={-10}/>
+			<MinMaxIncrement min={50} max={55}/>
+			<MinMaxIncrement min={10} max={10}/>
 		</div>
-	);
+	)
 }
+
+// <StudCard name={}/> --> React.createElement(StudCard, {})
+
+// function StudCard({ text }) {
+//   return (
+//     <>
+//       <hr />
+//       <div className="card">{text}</div>
+//       <hr />
+//     </>
+//   )
+// }
 
 export default App;
