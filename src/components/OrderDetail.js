@@ -8,8 +8,9 @@ export default function OrderDetail(props) {
             <p className="p-text">Price: {props.price}</p>
             <p className="p-text">Quantity: {props.quantity}</p>
             <div className="control-block">
-                <button className="order-detail-button quantity-increase" type="button" onClick={() => {alert('Increased')}}>+</button>
-                <button className="order-detail-button quantity-decrease" type="button" onClick={() => {alert('Decreased')}}>-</button>
+                {/* <button className="order-detail-button quantity-increase" type="button" onClick={() => {alert('Increased')}}>+</button> */}
+                <button className="order-detail-button quantity-increase" type="button" onClick={(e) => {props.incrementFunction(props.id, e)}}>+</button>
+                <button className="order-detail-button quantity-decrease" type="button" onClick={(e) => {props.decrementFunction(props.id, e)}}>-</button>
             </div>
         </div>
     )
