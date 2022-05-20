@@ -1,6 +1,6 @@
 import React from "react"
 
-function MinMax({ min = 1, max, current, onChange }) {
+function MinMax({ min = 0, max, current, onChange }) {
     // валидация инпута
     function applyCurrent(num) {
         const validNum = Math.max(min, Math.min(max, num))

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import MinMax from './MinMax'
+import BookCartTotals from './BookCartTotals'
 
 function booksStub() {
     return [
@@ -9,45 +10,59 @@ function booksStub() {
             title: 'Война и мир - Л.Н.Толстой',
             price: 800,
             rest: 10,
-            quantity: 1,
+            quantity: 0,
         },
         {
             id: 2,
             title: 'Две жизни - К.Е.Антарова',
             price: 700,
             rest: 5,
-            quantity: 1,
+            quantity: 0,
         },
         {
             id: 3,
             title: 'Разговор с богом - Н.Д.Уолша',
             price: 1000,
             rest: 2,
-            quantity: 1,
+            quantity: 0,
         },
         {
             id: 5,
             title: 'Хохот Шамана - В.П.Серкин',
             price: 600,
             rest: 8,
-            quantity: 1,
+            quantity: 0,
         },
         {
             id: 4,
             title: 'Хроники Ехо - Макс Фрай',
             price: 400,
             rest: 8,
-            quantity: 1,
+            quantity: 0,
         },
     ]
 }
 export default function BookCart() {
     const [books, setBooks] = useState(booksStub())
+    const navigate = useNavigate();
 
     const setQuantity = (id, quantity) => {
         setBooks(
             books.map((book) => (book.id !== id ? book : { ...book, quantity }))
         )
+    }
+
+    const deleteItem = (id) => {
+        setBooks(
+            books.filter((book) => book.id !== id)
+        )
+    }
+
+    const getTotals = () => {
+        return {
+            'totalAmount': books.map((book) => book.quantity * book.price).reduce((a, b) => a + b, 0),
+            'totalQuantity': books.map((book) => book.quantity).reduce((a, b) => a + b, 0)
+        }
     }
 
     return (
@@ -61,6 +76,7 @@ export default function BookCart() {
                         <th>Price</th>
                         <th>Quantity</th>
                         <th>Total</th>
+                        <th></th>
                     </tr>
                     {books.map((book, i) => (
                         <tr key={book.id}>
@@ -74,15 +90,22 @@ export default function BookCart() {
                                     onChange={(quantity) => setQuantity(book.id, quantity)}
                                 />
                             </td>
+                            <td>
+                                {book.quantity * book.price}
+                            </td>
+                            <td>
+                                <button type="button" className="deleteItemButton" onClick={(e) => {deleteItem(book.id, e)}}>X</button>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <div className="total">
-                <h3>Total amount:</h3>
-                <h3>Total quantity:</h3>
+            <BookCartTotals {...getTotals()}/>
+            <button type="submit" className="button order" onClick={(e) => navigate('/cart_totals', {replace: true, state: getTotals()})}>ORDER</button>
+            <div className="nav">
+                <Link to="/">Home</Link>
+                <Link to="/about">About Shop</Link>
             </div>
-            <Link to="/about">About Shop</Link>
         </div>
     )
 }
