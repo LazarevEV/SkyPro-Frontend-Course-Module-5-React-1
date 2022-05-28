@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
-function About() {
+function OrderTotals() {
     const location = useLocation();
     
     return (
@@ -19,4 +19,4 @@ function About() {
         </div>
     )
 }
-export default About
+export default OrderTotals

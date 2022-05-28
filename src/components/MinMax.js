@@ -1,27 +1,54 @@
-import React from "react"
+import React, { useState } from "react"
 
 function MinMax({ min = 0, max, current, onChange }) {
-    // валидация инпута
+    const [inputValue, setInputValue] = useState(current);
+
+    function limitNumber(num) {
+        return Math.max(min, Math.min(max, num));
+    }
+
     function applyCurrent(num) {
-        const validNum = Math.max(min, Math.min(max, num))
-        onChange(validNum)
+        setInputValue(num);
+        onChange(limitNumber(num));
     }
 
     function parseCurrentStr(e) {
-        // Прочти про parseInt ;) https://webformyself.com/chisla-v-javascript-funkciya-parseint/
-        const num = parseInt(e.target.value, 10)
-        applyCurrent(Number.isNaN(num) ? min : num)
+        const num = parseInt(e.target.value, 10);
+        setInputValue(Number.isNaN(num) ? min : num);
     }
 
-    const inc = () => applyCurrent(current + 1)
-    const dec = () => applyCurrent(current - 1)
+    function handleEnterPress(e) {
+        if (e.key === 'Enter') {
+            const inputValueNew = limitNumber(inputValue);
+            applyCurrent(inputValueNew);
+        }
+    }
+
+    function handleOnBlur(e) {
+        const inputValueNew = limitNumber(inputValue);
+        applyCurrent(inputValueNew);
+    }
+
+    const inc = () => {
+        applyCurrent(limitNumber(inputValue + 1));
+    }
+    
+    const dec = () => {
+        applyCurrent(limitNumber(inputValue - 1));
+    }
 
     return (
         <div>
             <button type="button" onClick={dec} className="removeButton">
                 -
             </button>
-            <input type="text" value={current} onChange={parseCurrentStr} />
+            <input
+                type="text"
+                value={inputValue}
+                onChange={parseCurrentStr}
+                onKeyPress={handleEnterPress}
+                onBlur={handleOnBlur}
+            />
             <button type="button" onClick={inc} className="addButton">
                 +
             </button>

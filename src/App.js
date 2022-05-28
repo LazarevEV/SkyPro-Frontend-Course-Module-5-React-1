@@ -4,6 +4,7 @@ import { Routes, Route } from 'react-router-dom'
 import About from './page/About'
 import NotFound from './page/NotFound'
 import OrderTotals from './page/OrderTotals'
+import SelectTask from './page/SelectTask'
 import BookCart from './components/BookCart'
 import LoginPass from './components/LoginPass'
 
@@ -15,7 +16,8 @@ function App() {
 					<Route path="/" element={<LoginPass />} />
 					<Route path="/cart" element={<BookCart/>} />
 					<Route path="/cart_totals" element={<OrderTotals/>} />
-					<Route path="about" element={<About />} />
+					<Route path="/about" element={<About />} />
+					<Route path="/selectTask" element={<SelectTask />} />
 					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</div>
