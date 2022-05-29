@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import PropTypes from 'prop-types'
 
 function MinMax({ min = 0, max, current, onChange }) {
     const [inputValue, setInputValue] = useState(current);
@@ -56,4 +57,11 @@ function MinMax({ min = 0, max, current, onChange }) {
     )
 }
 
-export default MinMax
+export default MinMax;
+
+MinMax.propTypes = {
+    min: PropTypes.number,
+    max: PropTypes.number,
+    current: PropTypes.number,
+    onChange: PropTypes.func
+}

@@ -1,0 +1,49 @@
+.array-map-wrapper {
+    width: 1028px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    background-color: #FFFFFF;
+	border-radius: 16px;
+	box-shadow: 0px 0px 12px 4px rgba(0, 0, 0, .25);
+
+    margin-left: calc(50vw - 512px);
+    margin-top: 32px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+.number-grid {
+    width: 800px;
+
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-auto-flow: row dense;
+    gap: 2px;
+    
+    margin-top: 64px;
+}
+
+.num-card {
+    width: 100px;
+    height: 100px;
+
+    font-size: 48px;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 100px;
+    text-align: center;
+}
+
+.prime {
+    background-color: #fb5e55;
+}
+
+.even {
+    background-color: #24bc74;
+}
+
+.odd {
+    background-color: #fbdc3f;
+}
