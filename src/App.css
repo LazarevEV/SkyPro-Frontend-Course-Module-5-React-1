@@ -187,6 +187,26 @@ h4 {
 	margin-top: calc(50vh - 92px);
 }
 
+.cred-wrapper input {
+	border-radius: 4px;
+	border: 1px solid black;
+}
+
+input.error {
+	border: 1px solid red;
+}
+
+.error:focus {
+	outline: 2px solid red;
+}
+
+.error-message {
+	display: none;
+	font-size: 12px;
+	text-align: center;
+	color: #df2929;
+}
+
 .button {
 	width: 64px;
 	height: 24px;
@@ -216,13 +236,6 @@ h4 {
 .button:hover {
 	cursor: pointer;
 	background-color: #439c56;
-}
-
-.error-message {
-	display: none;
-	font-size: 12px;
-	text-align: left;
-	color: #df2929;
 }
 
 .nav {

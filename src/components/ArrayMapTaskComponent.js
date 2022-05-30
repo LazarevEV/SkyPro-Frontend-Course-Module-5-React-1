@@ -31,7 +31,7 @@ export default function ArrayMapTaskComponent() {
         <div className="array-map-wrapper">
             <MinMax
                 min={0}
-                max={100}
+                max={104}
                 current={num}
                 onChange={(newNum) => handleOnChange(newNum)}
             />
