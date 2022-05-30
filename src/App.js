@@ -9,6 +9,8 @@ import BookCart from './components/BookCart'
 import LoginPass from './components/LoginPass'
 import ArrayMapTask from './page/ArrayMapTask'
 import LoginPassHW10 from './components/LoginPassHW10'
+import ShowHideTextBlock from './components/ShowHideTextBlock'
+import SquaresTask from './components/SquaresTask'
 
 function App() {
 	return (
@@ -22,6 +24,8 @@ function App() {
 					<Route path="/selectTask" element={<SelectTask />} />
 					<Route path="/arrayMapTask" element={<ArrayMapTask />} />
 					<Route path="/loginPassHW10" element={<LoginPassHW10 />} />
+					<Route path="/spoilerHW11" element={<ShowHideTextBlock />} />
+					<Route path="/squaresHW11" element={<SquaresTask />} />
 					<Route path="*" element={<NotFound />} />
 				</Routes>
 			</div>

@@ -1,0 +1,30 @@
+.array-map-wrapper.squares {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    gap: 12px;
+}
+
+.square {
+    width: 128px;
+    height: 128px;
+
+    border: none;
+}
+
+.square:hover {
+    cursor: pointer;
+}
+
+.square.green {
+    background-color: #006f3c;
+}
+
+.square.blue {
+    background-color: #264b96;
+}
+
+.square.red {
+    visibility: hidden;
+    background-color: #bf212f;
+}
