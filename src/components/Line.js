@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react'
+import React, { forwardRef, useState, componentWillReceiveProps, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import styled, { keyframes } from 'styled-components'
 
@@ -6,9 +6,8 @@ const circlePit = keyframes`
 	transform : rotateZ()
 `
 
-const StyledLine = styled.textarea`
-	width: 100%;
-	height: 100%;
+const LineStyled = styled.textarea`
+	width: 95vw;
 
 	background: black;
 	font-size: 24px;
@@ -16,7 +15,8 @@ const StyledLine = styled.textarea`
 	border: none;
 	resize: none;
 
-	padding: 0;
+	padding: 8px;
+	padding-bottom: 0;
 	margin: 0;
 
 	&:focus{
@@ -27,12 +27,17 @@ const StyledLine = styled.textarea`
 
 const Line = forwardRef((props, ref) => {
 	const [linePath, setLinePath] = useState(props.linePath)
+	const [isDisabled, setIsDisabled] = useState(false)
 
 	const onChange = (e) => {
-		e.target.value = (e.target.value.length <= linePath.length) ? linePath : e.target.value
+		const LineElement = e.target
+		LineElement.value = (LineElement.value.length <= linePath.length) ? linePath : LineElement.value
+		LineElement.style.height = '1px'
+		// LineElement.style.height = ''
+		LineElement.style.height = LineElement.scrollHeight + 'px'
 	}
 
-	return <StyledLine ref={ref} defaultValue={linePath} onChange={onChange}/>
+	return <LineStyled ref={ref} defaultValue={linePath} onChange={onChange}/>
 })
 
 Line.displayName = 'Line'
@@ -40,5 +45,6 @@ Line.displayName = 'Line'
 export default Line
 
 Line.propTypes = {
-	linePath: PropTypes.string
+	linePath: PropTypes.string,
+	disabled: PropTypes.bool
 }
