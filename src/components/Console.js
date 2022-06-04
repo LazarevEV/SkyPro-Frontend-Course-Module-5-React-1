@@ -4,16 +4,17 @@ import styled, { keyframes } from 'styled-components'
 import Line from './Line'
 
 const ConsoleStyled = styled.div`
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
+
+	display: flex;
+	flex-direction: column;
 `
 
-const Console = ({id, lines, setLines }) => {
-	// const [lines, setLines] = useState(['C:\\users\\SKYPRO_REACT>'])
-
+const Console = ({id, lines, setLines, theme }) => {
 	let lineRefs = useRef([createRef()])
 
-	const handleEnterPress = (e) => {
+	const handleKeyPress = (e) => {
 		if (e.keyCode === 13) {
 			e.preventDefault()
 			
@@ -30,13 +31,10 @@ const Console = ({id, lines, setLines }) => {
 	}, [lineRefs.current.length])
 
 	return (
-		<ConsoleStyled key={id} onKeyDown={handleEnterPress}>
+		<ConsoleStyled key={id} onKeyDown={handleKeyPress}>
 			{lines.map((line, idx) => (
-				<Line key={idx} ref={el => lineRefs.current[idx] = el} linePath={line}/>
+				<Line key={idx} ref={el => lineRefs.current[idx] = el} linePath={line} theme={theme} />
 			))}
-			{/* {lines.map((line, idx) => (
-				<textarea key={idx} ref={} defaultValue={line}/>
-			))} */}
 		</ConsoleStyled>
 	)
 }
@@ -45,6 +43,7 @@ Console.propTypes = {
 	id: PropTypes.number,
 	lines: PropTypes.array,
 	setLines: PropTypes.func,
+    theme: PropTypes.object
 }
 
 export default Console

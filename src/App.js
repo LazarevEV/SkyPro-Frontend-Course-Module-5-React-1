@@ -4,65 +4,68 @@ import MenuBar from './components/MenuBar'
 import Console from './components/Console'
 
 const LIGHT_THEME = {
-	// TODO
+	backgroundColor: '#e4e4e4',
+	fontColor: '#000000',
+	buttonColor: '#000000',
+	buttonHoverColor: '#5e5e5e',
+	buttonFontColor: '#e4e4e4',
+	menuBorderColor: '#000000'
 }
 
 const DARK_THEME = {
-	// TODO
+	backgroundColor: '#000000',
+	fontColor: '#e4e4e4',
+	buttonColor: '#e4e4e4',
+	buttonHoverColor: '#c9c9c9',
+	buttonFontColor: '#000000',
+	menuBorderColor: '#e4e4e4'
 }
+
+const THEMES = [LIGHT_THEME, DARK_THEME]
+const DEFAULT_THEME = 'dark'
 
 const GlobalStyle = createGlobalStyle`
   	body {
 		width: 100vw;
 		height: 100vh;
 
-		background: black;
-		font-family: Open-Sans, Helvetica, Sans-Serif;
+		background: ${(props) => (props.theme.backgroundColor)};
+		font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
 
 		margin: 0;
   	  	padding: 0;
   	}
 `
 
+const WrapperStyled = styled.div`
+	  width: 95vw
+	  display: flex;
+	  flex-direction: column;
+`
+
 function App() {
+	const [theme, setTheme] = useState(THEMES[+(DEFAULT_THEME === 'dark')])
 	const [lines, setLines] = useState(['C:\\users\\SKYPRO_REACT>'])
 	const [currentConsoleIdx, setCurrentConsoleIdx] = useState(0)
 
+	const setAppTheme = (toggleState) => {
+		setTheme(THEMES[+!toggleState] || theme)
+	}
+
 	return (
-		<>
-			<GlobalStyle />
-			<MenuBar currentConsoleIdx={currentConsoleIdx} setCurrentConsoleIdx={setCurrentConsoleIdx} setLines={setLines}/>
-			<Console key={currentConsoleIdx} lines={lines} setLines={setLines}/>
-		</>
+		<WrapperStyled>
+			<GlobalStyle theme={theme} />
+			<MenuBar
+				currentConsoleIdx={currentConsoleIdx}
+				setCurrentConsoleIdx={setCurrentConsoleIdx}
+				setLines={setLines}
+				defaultTheme={DEFAULT_THEME}
+				setAppTheme={setAppTheme}
+				theme={theme}
+			/>
+			<Console key={currentConsoleIdx} lines={lines} setLines={setLines} theme={theme} />
+		</WrapperStyled>
 	)
 }
-
-// class App extends React.Component {
-// 	constructor(props) {
-// 		super(props)
-// 		this.state = {
-// 			lines: ['C:\\users\\SKYPRO_REACT>'],
-// 			currentConsoleIdx: 0
-// 		}
-// 	}
-	
-// 	setLines = (lines) => {
-// 		this.setState({lines: lines})
-// 	}
-
-// 	setCurrentConsoleIdx = (newIdx) => {
-// 		this.setState({currentConsoleIdx: newIdx})
-// 	}
-
-// 	render() {
-// 		return (
-// 			<>
-// 				<GlobalStyle />
-// 				<MenuBar currentConsoleIdx={this.state.currentConsoleIdx} setCurrentConsoleIdx={this.setCurrentConsoleIdx}/>
-// 				<Console key={this.state.currentConsoleIdx} id={this.state.currentConsoleIdx} lines={this.state.lines} setLines={this.setLines}/>
-// 			</>
-// 		);
-// 	}
-// }
 
 export default App

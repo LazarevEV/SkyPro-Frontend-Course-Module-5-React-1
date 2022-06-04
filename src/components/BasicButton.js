@@ -8,20 +8,22 @@ const BasicButtonStyled = styled.button`
 
     border: none;
     border-radius: 8px;
-    background-color: teal;
+    background-color: ${(props) => (props.theme.buttonColor)};
 
     font-size: 18px;
+    font-weight: 600;
+    color: ${(props) => (props.theme.buttonFontColor)};
 
     &:hover {
         cursor: pointer;
-        background-color: grey;
+        background-color: ${(props) => (props.theme.buttonHoverColor)};
     }
 
 `
 
-const BasicButton = ({ buttonText, onClick }) => {
+const BasicButton = ({ buttonText, onClick, theme }) => {
     return (
-        <BasicButtonStyled onClick={onClick}>{buttonText}</BasicButtonStyled>
+        <BasicButtonStyled onClick={onClick} theme={theme}>{buttonText}</BasicButtonStyled>
     )
 }
 
@@ -29,5 +31,6 @@ export default BasicButton
 
 BasicButton.propTypes = {
     buttonText: PropTypes.string,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    theme: PropTypes.object
 }

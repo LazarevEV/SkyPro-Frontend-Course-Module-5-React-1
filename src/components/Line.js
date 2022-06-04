@@ -7,11 +7,11 @@ const circlePit = keyframes`
 `
 
 const LineStyled = styled.textarea`
-	width: 95vw;
+	width: calc(100vw - 16px);
 
-	background: black;
+	background: ${(props) => (props.theme.backgroundColor)};
 	font-size: 24px;
-	color: #e4e4e4;
+	color: ${(props) => (props.theme.fontColor)};
 	border: none;
 	resize: none;
 
@@ -37,14 +37,26 @@ const Line = forwardRef((props, ref) => {
 		LineElement.style.height = LineElement.scrollHeight + 'px'
 	}
 
-	return <LineStyled ref={ref} defaultValue={linePath} onChange={onChange}/>
+	const handleKeyPress = (e) => {
+		if (e.keyCode === 37 && e.target.selectionStart === linePath.length) e.preventDefault()
+	}
+
+	const handleMousePress = (e) => {
+		if (e.target.selectionStart < linePath.length) {
+			const cursorPosition = linePath.length
+			e.target.setSelectionRange(cursorPosition, cursorPosition)
+		}
+	}
+
+	return <LineStyled ref={ref} defaultValue={linePath} onChange={onChange} onKeyDown={handleKeyPress} onMouseUp={handleMousePress} theme={props.theme} />
 })
+
+Line.propTypes = {
+	linePath: PropTypes.string,
+	disabled: PropTypes.bool,
+    theme: PropTypes.object
+}
 
 Line.displayName = 'Line'
 
 export default Line
-
-Line.propTypes = {
-	linePath: PropTypes.string,
-	disabled: PropTypes.bool
-}
