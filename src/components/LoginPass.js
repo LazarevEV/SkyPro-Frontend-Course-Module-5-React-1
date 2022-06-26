@@ -1,6 +1,7 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useContext } from 'react'
 import useInputRequired from '../hooks/useInputRequired'
-import { Link, useNavigate } from 'react-router-dom'
+import UserInfoContext from '../context/UserInfoContext'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 const IS_LOGIN_REQUIRED = true;
 const IS_PASSWORD_REQUIRED = true;
@@ -13,6 +14,7 @@ const ERROR_MESSAGES = {
 
 export default function LoginPassHW10() {
     const [creds, inputChangeHandler, onBlurHandler, inputState, setInputState] = useInputRequired({});
+    const {user, setUser} = useContext(UserInfoContext)
     const navigate = useNavigate();
 
     const loginInputRef = useRef(null);
@@ -26,7 +28,13 @@ export default function LoginPassHW10() {
         count += (IS_LOGIN_REQUIRED) ? setError("login", loginInputRef, loginInputError) : 0
 
         // if (count === 0) navigate('/cart', {replace: true})
-        if (count === 0) navigate('/cart', {replace: true})
+        if (count === 0) {
+            setUser({
+                ...user,
+                email: creds.login
+            })
+            navigate('/order', {replace: true})
+        }
     }
 
     const validateLogin = () => {
