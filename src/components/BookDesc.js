@@ -1,4 +1,5 @@
-import React, { useState, useRef, useContext } from 'react'
+import axios from 'axios';
+import React, { useState, useRef, useContext, useEffect } from 'react'
 import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
@@ -40,6 +41,8 @@ const BoldText = styled.p`
 `
 
 export default function BookDesc() {
+    const [bookData, setBookData] = useState([])
+
     const navigate = useNavigate()
 
     const location = useLocation();
@@ -52,6 +55,37 @@ export default function BookDesc() {
     const {user, setUser} = useContext(UserInfoContext)
     console.log(user)
 
+    function searchBook(bookId) {
+        let searchBook = {
+            id: 0,
+            productName: 'N/A',
+            price: 'N/A',
+            quantity: 'N/A'
+        }
+        bookData.forEach((book) => {
+            if (book.id === bookId) searchBook = book
+        })
+        return searchBook
+          
+    }
+
+    useEffect(() => {
+        console.log('> componentDidMount > axios')
+        const requestUrl = 'https://api.jsonbin.io/v3/b/62c1b3583e0012331d99f8b3'
+        const token = '$2b$10$c/D2g4Hc39oVfh/vwGcOP.KVP.i39.8pomHwrNtP16/qPZtShANea'
+        const requestParams = {
+            headers: {
+                'X-Master-Key': token
+            }
+        }
+        axios.get(requestUrl, requestParams)
+            .then(res => {
+                // console.log(`>> DATA: ${res.data.record.bookStub}`)
+                const details = res.data.record.bookStub
+                setBookData(details)
+            })
+    }, [])
+
     return (
         <div className="order-detail book-desc">
             <GoBackButton onClick={goBack}><GoBackImg src={goBackIcon} /></GoBackButton>
@@ -62,20 +96,6 @@ export default function BookDesc() {
             </CardContent>
         </div>
     )
-}
-
-function searchBook(bookId) {
-    let searchBook = {
-        id: 0,
-        productName: 'N/A',
-        price: 'N/A',
-        quantity: 'N/A'
-    }
-    BOOK_DATA.forEach((book) => {
-        if (book.id === bookId) searchBook = book
-    })
-    return searchBook
-      
 }
 
 const BOOK_DATA = [

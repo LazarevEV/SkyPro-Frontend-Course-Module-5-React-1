@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import axios from 'axios';
 import React from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
@@ -37,42 +38,28 @@ export default class Order extends React.Component {
         this.state = {
             amount: 0,
             quantity: 0,
-            details: [
-                {
-                    id: 1,
-                    productName: 'Война и мир - Л.Н.Толстой',
-                    price: 800,
-                    quantity: 0,
-                },
-                {
-                    id: 2,
-                    productName: 'Две жизни - К.Е.Антарова',
-                    price: 700,
-                    quantity: 0,
-                },
-                {
-                    id: 3,
-                    productName: 'Разговор с богом - Н.Д.Уолша',
-                    price: 1000,
-                    quantity: 0,
-                },
-                {
-                    id: 4,
-                    productName: 'Хохот Шамана - В.П.Серкин',
-                    price: 600,
-                    quantity: 0,
-                },
-                {
-                    id: 5,
-                    productName: 'Хроники Ехо - Макс Фрай',
-                    price: 400,
-                    quantity: 0,
-                },
-            ],
+            details: [],
         }
     }
 
     static contextType = OrderInfoContext;
+
+    componentDidMount() {
+        console.log('> componentDidMount > axios')
+        const requestUrl = 'https://api.jsonbin.io/v3/b/62c1b3583e0012331d99f8b3'
+        const token = '$2b$10$c/D2g4Hc39oVfh/vwGcOP.KVP.i39.8pomHwrNtP16/qPZtShANea'
+        const requestParams = {
+            headers: {
+                'X-Master-Key': token
+            }
+        }
+        axios.get(requestUrl, requestParams)
+            .then(res => {
+                // console.log(`>> DATA: ${res.data.record.bookStub}`)
+                const details = res.data.record.bookStub
+                this.setState({ ...this.state, details: details });
+            })
+    }
 
     increaseUnitQuantityAndPrice = (unitId) => {
         let stateDetails = Object.values({...this.state.details});
